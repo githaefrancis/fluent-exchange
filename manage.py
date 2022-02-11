@@ -1,11 +1,11 @@
-from app import create_app
+from app import create_app,db
 from flask_migrate import Migrate
 import unittest
 app=create_app('development')
 
 migrate=Migrate()
 
-#migrate.init_app(app,db)
+migrate.init_app(app,db)
 
 @app.cli.command()
 def test():
