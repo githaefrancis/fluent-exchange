@@ -16,8 +16,9 @@ def test():
   unittest.TextTestRunner(verbosity=2).run(tests)
 
 @app.shell_context_processor
+
 def make_shell_context():
-  return dict(app=app)
+  return dict(app=app,db=db)
   
 
 

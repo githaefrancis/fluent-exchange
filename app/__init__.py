@@ -16,7 +16,7 @@ def create_app(config_name):
 
   app.register_blueprint(auth_blueprint)
 
-  db.init_app(db)
+  db.init_app(app)
 
 
   return app
