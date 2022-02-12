@@ -1,0 +1,14 @@
+header{
+  min-height:50vh;
+  padding-top:2rem;
+  background-color: rgb(149, 149, 212);
+}
+
+.blog-thumbnail{
+  height:20rem;
+  width:100%;
+}
+
+.hero-img{
+  height: 100%;
+}

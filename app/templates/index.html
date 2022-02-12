@@ -1,16 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  {%if quote%}
-  {{quote.author}}
-  {{quote.content}}
-  {% endif %}
-  Hello
-</body>
-</html>
+{% extends 'base.html' %}
+
+
+{%block content%}
+
+<div class="card">
+
+  <div class="">
+    <img src="{{url_for('static',filename='images/hero.jpg')}}" alt="" class="img-fluid blog-thumbnail">
+  </div>card-img
+</div>
+
+
+{%endblock%}
