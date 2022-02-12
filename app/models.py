@@ -76,6 +76,12 @@ class Post(db.Model):
     db.session.add(self)
     db.session.commit()
 
+
+  def delete_post(self):
+    self.status='archived'
+    db.session.add(self)
+    db.session.commit()
+
 class Comment(db.Model):
   '''
   class to define the comment model

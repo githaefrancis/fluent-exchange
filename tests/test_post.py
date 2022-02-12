@@ -16,6 +16,11 @@ class PostModelTest(unittest.TestCase):
     self.assertEquals(self.new_post.content,"This is the first post ever in this channel.The fluent debutter")
     self.assertEquals(self.new_post.banner_path,"images/img1.jpg")
 
-  def test_post_save(self):
+  def test_save_post(self):
     self.new_post.save_post()
     self.assertTrue(len(Post.query.all())==1)
+
+  def test_delete_post(self):
+    self.new_post.delete_post()
+    self.assertTrue(self.new_post.status,'archived')
+    
