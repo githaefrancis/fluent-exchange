@@ -1,9 +1,9 @@
 from datetime import datetime
-from . import db
+
 from werkzeug.security import generate_password_hash,check_password_hash
 from . import login_manager
 from flask_login import UserMixin
-
+from . import db
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -79,10 +79,10 @@ class Comment(db.Model):
   content=db.Column(db.String(500))
   created_at=db.Column(db.DateTime,default=datetime.utcnow)
   user_id=db.Column(db.Integer,db.ForeignKey('users.id'))
-  post_id=db.Column(db.Integer,db.relationship('posts.id'))
+  post_id=db.Column(db.Integer,db.ForeignKey('posts.id'))
   status=db.Column(db.String(255))
 
-class Quote():
+class Quote:
   '''
   class to define the structure of the Quoute
   '''
@@ -92,8 +92,8 @@ class Quote():
     self.content=content
     self.link=link
 
-  def __repr__(self):
-    return self.content
+  # def __repr__(self):
+  #   return self.content
 
 
 

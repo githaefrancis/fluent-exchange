@@ -1,6 +1,8 @@
+from flask import render_template
 from . import main
-
+from ..request import get_quote
 
 @main.route('/')
 def index():
-  return '<h1>Welcome to the fluent app</h1>'
+  quote=get_quote()
+  return render_template('index.html',quote=quote)
