@@ -82,6 +82,17 @@ class Comment(db.Model):
   post_id=db.Column(db.Integer,db.ForeignKey('posts.id'))
   status=db.Column(db.String(255))
 
+class Subscriber(db.Model):
+  '''
+  class to define the subscriber model
+  '''
+
+  __tablename__='subscribers'
+  id=db.Column(db.Integer,primary_key=True)
+  email=db.Column(db.String(255))
+  created_at=db.Column(db.DateTime,default=datetime.utcnow)
+  active=db.Column(db.Boolean,default=True)
+
 class Quote:
   '''
   class to define the structure of the Quoute
