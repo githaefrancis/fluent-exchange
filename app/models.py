@@ -113,9 +113,15 @@ class Subscriber(db.Model):
 
   __tablename__='subscribers'
   id=db.Column(db.Integer,primary_key=True)
+  name=db.Column(db.String(255))
   email=db.Column(db.String(255))
   created_at=db.Column(db.DateTime,default=datetime.utcnow)
   active=db.Column(db.Boolean,default=True)
+
+
+  def save_subscriber(self):
+    db.session.add(self)
+    db.session.commit()
 
 class Quote:
   '''
