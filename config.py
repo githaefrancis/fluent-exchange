@@ -17,7 +17,7 @@ class DevConfig(Config):
   DEBUG=True
 
 class TestConfig(Config):
-  SQLALCHEMY_DATABASE_URI='postgresql+psycopg2://moringa:1234@localhost/fluent_exchange'
+  SQLALCHEMY_DATABASE_URI='postgresql+psycopg2://moringa:1234@localhost/fluent_exchange_test'
   
 
 config_options={

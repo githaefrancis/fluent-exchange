@@ -72,6 +72,9 @@ class Post(db.Model):
   status=db.Column(db.String(255),default='active')
   created_at=db.Column(db.DateTime,default=datetime.utcnow)
 
+  def save_post(self):
+    db.session.add(self)
+    db.session.commit()
 
 class Comment(db.Model):
   '''
@@ -85,6 +88,17 @@ class Comment(db.Model):
   user_id=db.Column(db.Integer,db.ForeignKey('users.id'))
   post_id=db.Column(db.Integer,db.ForeignKey('posts.id'))
   status=db.Column(db.String(255))
+
+  def save_comment(self):
+    db.session.add(self)
+    db.session.commit()
+
+  def delete_comment(self):
+    self.status='archived'
+    db.session.add(self)
+    db.session.commit()
+
+
 
 class Subscriber(db.Model):
   '''
