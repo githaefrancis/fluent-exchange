@@ -1,14 +1,13 @@
 {% extends 'base.html' %}
-
+{% import 'macros.html' as macro %}
 
 {%block content%}
 
-<div class="card">
-
-  <div class="">
-    <img src="{{url_for('static',filename='images/hero.jpg')}}" alt="" class="img-fluid blog-thumbnail">
-  </div>card-img
-</div>
+{{macro.displayPosts()}}
 
 
 {%endblock%}
+
+{% block sidebar %}
+{{macro.displayFeatured()}}
+{% endblock %}

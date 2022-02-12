@@ -1,0 +1,33 @@
+{% macro displayPosts() %}
+
+<div class="card">
+
+  <div class="card-img">
+    <img src="{{url_for('static',filename='images/hero.jpg')}}" alt="" class="img-fluid blog-thumbnail">
+  </div>
+  <card-text>
+
+    <h2>The heading</h2>
+
+    <p>Your content goes here</p>
+  </card-text>
+</div>
+{% endmacro %}
+
+{% macro displayFeatured() %}
+
+<div class="card">
+  <div class="row">
+    <div class="col-lg-4">
+      <div class="card-img">
+        <img src="{{url_for('static',filename='images/hero.jpg')}}" alt="" class="img-fluid featured-thumbnail">
+      </div>
+    </div>
+    <div class="col-lg-8">
+  <h6>Heading </h6>
+  <p>Your content goes here</p>
+    </div>
+  </div>
+  </div>
+
+{% endmacro %}
