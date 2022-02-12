@@ -19,20 +19,25 @@
   {% endblock %}
 
   {% block header %}
-  {%include 'header.html'%}
+
+  {% endblock %}
+
+  {% block authentication %}
+
+
   {% endblock %}
 
   <div class="container">
     <div class="row pt-3">
   <div class="col-lg-8">
-    <h1>Blog Posts</h1>
+    
     {% block content%}
 
   {% endblock %}
 </div>
 
 <div class="col-lg-4">
-  <h3>Featured</h3>
+  
   {% block sidebar %}
 
 
