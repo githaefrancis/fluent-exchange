@@ -1,3 +1,4 @@
+from crypt import methods
 import os
 from flask import redirect, render_template,request,url_for
 from flask_login import current_user, login_required
@@ -6,6 +7,7 @@ from ..request import get_quote
 from ..models import Post, User
 from .forms import PostForm
 from werkzeug.utils import secure_filename
+from .. import db
 
 @main.route('/')
 def index():
@@ -55,3 +57,26 @@ def delete(id):
   post_to_delete=Post.query.filter_by(id=id).first()
   post_to_delete.delete_post()
   return redirect(url_for('main.index'))
+
+@main.route('/blog/post/<id>/update',methods=['GET','POST'])
+def update(id):
+  target_post=Post.query.filter_by(id=id).first()
+  edit_post_form=PostForm(obj=target_post)
+  # edit_post_form.title.data=target_post.title
+  # edit_post_form.content.data=target_post.content
+
+  if request.method=='POST':
+    target_post.title=edit_post_form.title.data
+    target_post.content=edit_post_form.content.data
+
+    banner=request.files['banner']
+    if banner:
+      filename=secure_filename(banner.filename)
+      banner.save(os.path.join('app/static/images',filename))
+      file_path=f'images/{filename}'
+      target_post.banner_path=file_path
+
+    target_post.save_post()
+    return redirect(url_for('main.blog_post',id=id))
+
+  return render_template('edit_post.html',edit_post_form=edit_post_form)
