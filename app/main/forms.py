@@ -9,3 +9,7 @@ class PostForm(FlaskForm):
   banner=FileField('Banner image',validators=[InputRequired()])
   content=TextAreaField('',validators=[],render_kw={"placeholder": "New Post"})
   submit=SubmitField('Submit')
+
+class CommentForm(FlaskForm):
+  comment=TextAreaField('',validators=[],render_kw={"placeholder":"Comment"})
+  submit=SubmitField('Submit')

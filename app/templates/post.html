@@ -1,9 +1,12 @@
 {% extends 'base.html' %}
 {% import 'macros.html' as macro %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
 {%block content%}
 
 {{macro.displaySinglePost(post,current_user)}}
 
+{{wtf.quick_form(comment_form)}}
 
 {%endblock%}
 

@@ -1,11 +1,12 @@
-from crypt import methods
+
 import os
+
 from flask import redirect, render_template,request,url_for
 from flask_login import current_user, login_required
 from . import main
 from ..request import get_quote
-from ..models import Post, User
-from .forms import PostForm
+from ..models import Post, User,Comment
+from .forms import PostForm,CommentForm
 from werkzeug.utils import secure_filename
 from .. import db
 
@@ -45,11 +46,20 @@ def write():
   return render_template('write.html',post_form=post_form)
 
 
-@main.route('/blog/post/<id>')
+@main.route('/blog/post/<id>',methods=['GET','POST'])
 def blog_post(id):
   post=Post.query.filter_by(id=id).first()
+  comment_form=CommentForm()
+  if current_user.is_authenticated:
+    comment_owner=current_user
   
-  return render_template('post.html',post=post)
+  else:
+    comment_owner=User.query.filter_by(username='guest').first()
+  if request.method=='POST':
+    comment=comment_form.comment.data
+    new_comment=Comment(content=comment,user=comment_owner,post=post)
+    new_comment.save_comment()
+  return render_template('post.html',post=post,comment_form=comment_form)
 
 
 @main.route('/blog/post/<id>/delete')
@@ -80,3 +90,8 @@ def update(id):
     return redirect(url_for('main.blog_post',id=id))
 
   return render_template('edit_post.html',edit_post_form=edit_post_form)
+
+
+# @main.route('/blog/post/<id>/comment')
+# def comment(id):
+

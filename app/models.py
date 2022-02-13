@@ -1,4 +1,5 @@
 from datetime import datetime
+from email.policy import default
 
 from werkzeug.security import generate_password_hash,check_password_hash
 from . import login_manager
@@ -93,7 +94,7 @@ class Comment(db.Model):
   created_at=db.Column(db.DateTime,default=datetime.utcnow)
   user_id=db.Column(db.Integer,db.ForeignKey('users.id'))
   post_id=db.Column(db.Integer,db.ForeignKey('posts.id'))
-  status=db.Column(db.String(255))
+  status=db.Column(db.String(255),default='active')
 
   def save_comment(self):
     db.session.add(self)
