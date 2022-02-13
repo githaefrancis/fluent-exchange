@@ -9,6 +9,9 @@ class Config:
   SECRET_KEY=os.environ.get('SECRET_KEY')
   QUOTE_BASE_URL='http://quotes.stormconsultancy.co.uk/random.json'
 
+  SIMPLEMDE_JS_IIFE=True
+  SIMPLEMDE_USE_CDN=True
+
 class ProdConfig(Config):
   pass
 
