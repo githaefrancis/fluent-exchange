@@ -38,6 +38,8 @@ def register():
   return render_template('auth/register.html',register_form=register_form)
 
 
+
+
 @auth.route('/user/<user_name>/logout')
 @login_required
 def logout(user_name):

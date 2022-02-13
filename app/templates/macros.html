@@ -64,7 +64,7 @@
     <p>{{post.content}}</p>
     {% if current_user.is_authenticated %}
     <div class="action">
-      <p><button>Update</button> <button>Delete</button></p>
+      <p><a class="btn btn-success">Update</a> <a href="{{url_for('main.delete',id=post.id)}}" class="btn btn-success">Delete</a></p>
 
     </div>
     {% endif %}

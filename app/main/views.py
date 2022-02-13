@@ -10,7 +10,7 @@ from werkzeug.utils import secure_filename
 @main.route('/')
 def index():
   quote=get_quote()
-  posts=Post.query.order_by(Post.id.desc()).all()
+  posts=Post.query.filter_by(status='active').order_by(Post.id.desc()).all()
   return render_template('index.html',quote=quote,posts=posts)
 
 
@@ -38,8 +38,8 @@ def write():
 
       new_post=Post(title=post_title,content=content,user=current_user,banner_path=file_path)
       new_post.save_post()
-      post_id=Post.query.last()
-      return redirect(url_for('main.blog_post',id=post_id))
+      saved_post=Post.query.filter_by(user=current_user).order_by(Post.id.desc()).first()
+      return redirect(url_for('main.blog_post',id=saved_post.id))
   return render_template('write.html',post_form=post_form)
 
 
@@ -48,3 +48,10 @@ def blog_post(id):
   post=Post.query.filter_by(id=id).first()
   
   return render_template('post.html',post=post)
+
+
+@main.route('/blog/post/<id>/delete')
+def delete(id):
+  post_to_delete=Post.query.filter_by(id=id).first()
+  post_to_delete.delete_post()
+  return redirect(url_for('main.index'))
