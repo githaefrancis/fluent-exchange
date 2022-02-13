@@ -1,10 +1,30 @@
 {% extends 'base.html' %}
+{% import 'macros.html' as macro %}
+
 
 {% block content %}
 
-{%if user %}
-Welcome {{user.name}}
+{% if posts %}
 
-
+{{macro.displayPosts(posts)}}
 {% endif %}
+
+
+{% endblock %}
+
+{% block sidebar %}
+{%if user %}
+
+{% if user.profile_pic_path %}
+<img src="{{url_for('static',filename='user.profile_pic_path')}}" alt="">
+{%else%}
+<p class="rounded-circle">No Profile pic</p>
+{% endif %}
+<p>Name: {{user.name}}</p>
+<p>Username: {{user.username}}</p>
+<p>Email: {{user.email}}</p>
+<p>Bio: {{user.bio}}</p>
+<p>Joined on: {{user.created_at}}</p>
+{% endif %}
+
 {% endblock %}

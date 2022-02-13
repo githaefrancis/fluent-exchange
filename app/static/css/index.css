@@ -1,7 +1,18 @@
+body{
+}
 header{
   min-height:50vh;
   padding-top:2rem;
-  background-color: rgb(149, 149, 212);
+  /* background: transparent; */
+  background: url('/static/assets/bg.jpg');
+  background-position: fixed;
+  background-attachment: fixed;
+  backdrop-filter: blur(2px);
+
+  /* background-color: rgb(149, 149, 212); */
+}
+header h1,header h5,.quote-intro{
+  color:white;
 }
 
 .blog-thumbnail{
@@ -17,4 +28,16 @@ header{
 
   height: 10rem;
   width:10rem;
+}
+
+.main{
+  min-height: 40vh;
+}
+#submit{
+  background-color:green;
+  color:white;
+  /* margin-top:2rem ; */
+}
+input{
+  margin-bottom: 1rem;
 }

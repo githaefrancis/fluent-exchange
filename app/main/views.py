@@ -21,8 +21,8 @@ def index():
 @login_required
 def profile(user_name):
   user=User.query.filter_by(id=current_user.id).first()
-
-  return render_template('profile/profile.html',user=user)
+  posts=Post.query.filter_by(user=current_user,status='active').all()
+  return render_template('profile/profile.html',user=user,posts=posts)
 
 @main.route('/blog/write' , methods=['GET','POST'])
 @login_required
@@ -94,8 +94,6 @@ def update(id):
   return render_template('edit_post.html',edit_post_form=edit_post_form)
 
 
-# @main.route('/blog/post/<id>/comment')
-# def comment(id):
 
 @main.route('/comment/<id>/delete')
 def delete_comment(id):
