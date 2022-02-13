@@ -73,3 +73,23 @@
 
 
 {% endmacro %}
+
+{% macro displayComments(commentsList,current_user) %}
+{% for comment in commentsList %}
+
+<div class="shadow p-2">
+  {% if comment.user.username=='guest' %}
+  <p class="badge bg-secondary">Anonymous</p>
+  {%else%}
+  <p class="badge bg-secondary">{{comment.user.username}}</p>
+
+  {% endif %}
+  <p>{{comment.content}}
+  </p>
+  {% if comment.user==current_user %}
+  <p class="d-flex justify-content-end"><a href="{{url_for('main.delete_comment',id=comment.id)}}" class="btn bg-danger">Delete</a></p>
+  {% endif %}
+</div>
+
+{% endfor %}
+{% endmacro %}

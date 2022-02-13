@@ -50,6 +50,7 @@ def write():
 def blog_post(id):
   post=Post.query.filter_by(id=id).first()
   comment_form=CommentForm()
+  comments=Comment.query.filter_by(post=post,status='active').all()
   if current_user.is_authenticated:
     comment_owner=current_user
   
@@ -59,7 +60,8 @@ def blog_post(id):
     comment=comment_form.comment.data
     new_comment=Comment(content=comment,user=comment_owner,post=post)
     new_comment.save_comment()
-  return render_template('post.html',post=post,comment_form=comment_form)
+    return redirect(request.referrer)
+  return render_template('post.html',post=post,comment_form=comment_form,comments=comments)
 
 
 @main.route('/blog/post/<id>/delete')
@@ -95,3 +97,7 @@ def update(id):
 # @main.route('/blog/post/<id>/comment')
 # def comment(id):
 
+@main.route('/comment/<id>/delete')
+def delete_comment(id):
+  target_comment=Comment.query.filter_by(id=id).first()
+  target_comment.delete_comment()
