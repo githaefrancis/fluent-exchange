@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% import 'macros.html' as macro %}
+{%block content%}
+
+{{macro.displaySinglePost(post,current_user)}}
+
+
+{%endblock%}
+
+{% block sidebar %}
+<h3>Featured</h3>
+
+{% endblock %}

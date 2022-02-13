@@ -34,3 +34,42 @@
   </div>
 
 {% endmacro %}
+
+{% macro displaySinglePost(post,current_user) %}
+
+<div class="card border-0">
+
+  <div class="card-img">
+    <img src="{{url_for('static',filename=post.banner_path)}}" alt="" class="img-fluid blog-thumbnail rounded-3">
+  </div>
+  <div>
+
+    {% if post.user.banner_path %}
+    <p><img src="{{url_for('static',post.user.banner_path)}}" alt="" class="avatar rounded-circle m-3"> Written By {{post.user.username}}
+    <span>on {{post.created_at}}</span>
+    
+    </p>
+    {% else %}
+    <p><img src="{{url_for('static',filename='images/hero.jpg')}}" alt="" class="avatar rounded-circle m-3"> Written By {{post.user.username}}
+      <span class=" mx-5"> {{post.created_at}}</span>
+    </p>
+    
+
+    {% endif %}
+  </div>
+  <card-text>
+
+    <h2>{{post.title}}</h2>
+
+    <p>{{post.content}}</p>
+    {% if current_user.is_authenticated %}
+    <div class="action">
+      <p><button>Update</button> <button>Delete</button></p>
+
+    </div>
+    {% endif %}
+  </card-text>
+</div>
+
+
+{% endmacro %}

@@ -10,7 +10,7 @@ from werkzeug.utils import secure_filename
 @main.route('/')
 def index():
   quote=get_quote()
-  posts=Post.query.all()
+  posts=Post.query.order_by(Post.id.desc()).all()
   return render_template('index.html',quote=quote,posts=posts)
 
 
@@ -38,11 +38,13 @@ def write():
 
       new_post=Post(title=post_title,content=content,user=current_user,banner_path=file_path)
       new_post.save_post()
-      return redirect(url_for('main.index'))
+      post_id=Post.query.last()
+      return redirect(url_for('main.blog_post',id=post_id))
   return render_template('write.html',post_form=post_form)
 
 
 @main.route('/blog/post/<id>')
 def blog_post(id):
   post=Post.query.filter_by(id=id).first()
+  
   return render_template('post.html',post=post)

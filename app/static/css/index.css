@@ -12,3 +12,9 @@ header{
 .hero-img{
   height: 100%;
 }
+
+.avatar{
+
+  height: 10rem;
+  width:10rem;
+}
