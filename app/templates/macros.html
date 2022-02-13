@@ -1,17 +1,20 @@
-{% macro displayPosts() %}
-
+{% macro displayPosts(post_list) %}
+{% for post in post_list %}
 <div class="card">
 
   <div class="card-img">
-    <img src="{{url_for('static',filename='images/hero.jpg')}}" alt="" class="img-fluid blog-thumbnail">
+    <img src="{{url_for('static',filename=post.banner_path)}}" alt="" class="img-fluid blog-thumbnail">
   </div>
   <card-text>
 
-    <h2>The heading</h2>
+    <h2>{{post.title}}</h2>
 
-    <p>Your content goes here</p>
+    <p>{{post.content}}</p>
+
+    <p>By {{post.user.username}}</p>
   </card-text>
 </div>
+{%endfor%}
 {% endmacro %}
 
 {% macro displayFeatured() %}
