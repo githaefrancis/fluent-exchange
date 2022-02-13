@@ -1,12 +1,22 @@
-from flask import redirect, render_template,url_for
+from flask import redirect, render_template,url_for,request
 from . import auth
 from .forms import RegistrationForm,LoginForm
 from flask_login import login_user,current_user,logout_user,login_required
+
 from ..models import User,Role
 
-@auth.route('/login')
+@auth.route('/login', methods=['GET','POST'])
 def login():
+  if current_user.is_authenticated:
+    return redirect(url_for('main.index'))
   login_form=LoginForm()
+  if login_form.validate_on_submit():
+    user=User.query.filter_by(email=login_form.email.data).first()
+    if user is not None and user.verify_password(login_form.password.data) and user.status=='active':
+      login_user(user)
+      return redirect(request.args.get('next') or url_for('main.index'))
+
+
   return render_template('auth/login.html',login_form=login_form)
 
 
@@ -26,3 +36,10 @@ def register():
     user.save_user()
     return redirect(url_for('auth.login'))
   return render_template('auth/register.html',register_form=register_form)
+
+
+@auth.route('/user/<user_name>/logout')
+@login_required
+def logout(username):
+  logout_user()
+  return redirect(url_for("main.index"))
