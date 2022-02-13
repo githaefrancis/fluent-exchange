@@ -101,3 +101,4 @@ def update(id):
 def delete_comment(id):
   target_comment=Comment.query.filter_by(id=id).first()
   target_comment.delete_comment()
+  return redirect(request.referrer)
