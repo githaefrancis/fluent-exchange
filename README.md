@@ -80,7 +80,14 @@ source .env
 ```
 chmod +x start.sh
 ```
-5. Run the application
+
+5. Run tests
+
+```bash
+flask test
+```
+
+6. Run the application
 
 ```
 ./start.sh
