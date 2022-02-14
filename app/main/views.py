@@ -11,6 +11,8 @@ from werkzeug.utils import secure_filename
 from .. import db
 from ..request import subscriber_alert
 from .request import fetch_comments_count
+import markdown2
+
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg','gif'}
 
@@ -66,6 +68,7 @@ def write():
 @main.route('/blog/post/<id>',methods=['GET','POST'])
 def blog_post(id):
   post=Post.query.filter_by(id=id).first()
+  format_post=markdown2.markdown(post.content,extras=["code-friendly","fenced-code-blocks"])
   comment_form=CommentForm()
   comments=Comment.query.filter_by(post=post,status='active').all()
   if current_user.is_authenticated:
@@ -78,7 +81,7 @@ def blog_post(id):
     new_comment=Comment(content=comment,user=comment_owner,post=post)
     new_comment.save_comment()
     return redirect(request.referrer)
-  return render_template('post.html',post=post,comment_form=comment_form,comments=comments)
+  return render_template('post.html',post=post,comment_form=comment_form,comments=comments,format_post=format_post)
 
 
 @main.route('/blog/post/<id>/delete')

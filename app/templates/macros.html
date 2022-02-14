@@ -35,7 +35,7 @@
 
 {% endmacro %}
 
-{% macro displaySinglePost(post,current_user) %}
+{% macro displaySinglePost(post,current_user,format_post) %}
 
 <div class="card border-0">
 
@@ -61,7 +61,8 @@
 
     <h2>{{post.title}}</h2>
 
-    <p>{{post.content}}</p>
+    <!-- <p>{{post.content}}</p> -->
+    <p>{{format_post | safe}}</p>
     {% if current_user.is_authenticated and current_user==post.user %}
     <div class="action">
       <p><a class="btn btn-success" href="{{url_for('main.update',id=post.id)}}">Update</a> <a href="{{url_for('main.delete',id=post.id)}}" class="btn btn-success">Delete</a></p>
