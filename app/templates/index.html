@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% import 'macros.html' as macro %}
-
+{% import 'bootstrap/wtf.html' as wtf %}
 {% block header %}
 
 {%include 'header.html'%}
@@ -15,6 +15,11 @@
 {%endblock%}
 
 {% block sidebar %}
+<h5 class="pt-3">Never miss an article. Subscribe today</h5>
+<div class="card shadow p-3">
+{{wtf.quick_form(subscriber_form)}}
+</div>
+<hr>
 <h3>Featured</h3>
 {{macro.displayFeatured()}}
 {% endblock %}

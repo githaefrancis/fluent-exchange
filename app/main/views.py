@@ -6,7 +6,7 @@ from flask_login import current_user, login_required
 from . import main
 from ..request import get_quote
 from ..models import Post, User,Comment,Subscriber
-from .forms import PostForm,CommentForm
+from .forms import PostForm,CommentForm,SubscribeForm
 from werkzeug.utils import secure_filename
 from .. import db
 from ..request import subscriber_alert
@@ -18,7 +18,8 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg','gif'}
 def index():
   quote=get_quote()
   posts=Post.query.filter_by(status='active').order_by(Post.id.desc()).all()
-  return render_template('index.html',quote=quote,posts=posts)
+  subscriber_form=SubscribeForm()
+  return render_template('index.html',quote=quote,posts=posts,subscriber_form=subscriber_form)
 
 
 @main.route('/user/<user_name>/profile')

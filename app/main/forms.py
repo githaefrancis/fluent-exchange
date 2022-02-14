@@ -1,7 +1,8 @@
+from distutils.text_file import TextFile
 from flask_wtf import FlaskForm
 
-from wtforms import TextAreaField,SubmitField,FileField,StringField
-from wtforms.validators import InputRequired
+from wtforms import TextAreaField,SubmitField,FileField,StringField,EmailField
+from wtforms.validators import InputRequired,Email
 
 
 class PostForm(FlaskForm):
@@ -13,3 +14,8 @@ class PostForm(FlaskForm):
 class CommentForm(FlaskForm):
   comment=TextAreaField('',validators=[],render_kw={"placeholder":"Comment"})
   submit=SubmitField('Submit')
+
+class SubscribeForm(FlaskForm):
+  name=StringField('',validators=[InputRequired()],render_kw={"placeholder":"name"})
+  email=EmailField('',validators=[InputRequired(),Email()],render_kw={"placeholder":"email"})
+  SubmitField=SubmitField('Subscribe')
