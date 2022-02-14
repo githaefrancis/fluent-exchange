@@ -1,6 +1,6 @@
-{% macro displayPosts(post_list) %}
+{% macro displayPosts(post_list,comments_count) %}
 {% for post in post_list %}
-<div class="card">
+<div class="card p-3 mb-3 border-0 shadow rounded-2">
 
   <div class="card-img">
     <img src="{{url_for('static',filename=post.banner_path)}}" alt="" class="img-fluid blog-thumbnail">
@@ -9,9 +9,9 @@
 
     <h2><a href="{{url_for('main.blog_post',id=post.id)}}">{{post.title}}</a></h2>
 
-    <p>{{post.content}}</p>
+    <p>{{post.content | truncate(400,True)}}</p>
 
-    <p>By {{post.user.username}}</p>
+    <p>By {{post.user.username}} <span><a href="{{url_for('main.blog_post',id=post.id)}}">{{comments_count[post.id] or 0}} Comments</a></span></p>
   </card-text>
 </div>
 {%endfor%}

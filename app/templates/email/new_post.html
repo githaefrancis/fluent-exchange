@@ -1,14 +1,15 @@
-<div  style="color:blue;">
+<div style="font-size:18px;">
   Hello {{subscriber.name}} <br>
   We have brand new post on Fluent exchange <br>    
   Head there while it is still fresh <br>
 
+  <div style="border:2px solid black;border-radius:10px;padding:5px;">
   Title: {{post.title}}
-  <img src="{{url_for('static',filename=post.banner_url)}}" alt="">
-  Excerpt: {{post.content | truncate(100,True)}}
+  <img src="{{url_for('static',filename=post.banner_url)}}" alt=""><br>
+  Excerpt: {{post.content | truncate(200,True)}} <br>
   Regards,<br>
   Fluent Exchange.
   <br>
-  <button class="btn btn-success" style="background-color:green;">Visit</button>
-  
+  <button class="btn btn-success" style="background-color:green; padding:2px;margin:2px;border:None;border-radius:2px;">Visit</button>
+</div>
   </div>  

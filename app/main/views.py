@@ -10,16 +10,24 @@ from .forms import PostForm,CommentForm,SubscribeForm
 from werkzeug.utils import secure_filename
 from .. import db
 from ..request import subscriber_alert
+from .request import fetch_comments_count
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg','gif'}
 
 
-@main.route('/')
+@main.route('/',methods=['GET','POST'])
 def index():
   quote=get_quote()
   posts=Post.query.filter_by(status='active').order_by(Post.id.desc()).all()
   subscriber_form=SubscribeForm()
-  return render_template('index.html',quote=quote,posts=posts,subscriber_form=subscriber_form)
+  if request.method=='POST':
+    if subscriber_form.validate_on_submit():
+      new_subscriber=Subscriber(name=subscriber_form.name.data,email=subscriber_form.email.data)
+      new_subscriber.save_subscriber()
+      flash('You have subscribed successfully','success')
+      return redirect(request.referrer)
+  all_comments=fetch_comments_count(posts)
+  return render_template('index.html',quote=quote,posts=posts,subscriber_form=subscriber_form,comments=all_comments)
 
 
 @main.route('/user/<user_name>/profile')
@@ -33,8 +41,9 @@ def profile(user_name):
 @login_required
 def write():
   post_form=PostForm()
-  subscribers_list=Subscriber.query.filter_by(status='active').all()
   if request.method=='POST':
+    subscribers_list=Subscriber.query.filter_by(active=True).all()
+
     banner=request.files['banner']
 
     if banner:
