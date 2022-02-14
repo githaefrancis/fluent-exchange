@@ -13,8 +13,8 @@ Francis Githae
 Python 3.8.10
 Flask
 Bootstrap
-Fontawesome
 JQuery
+Javascript
 
 # Features
 - Register for a account
