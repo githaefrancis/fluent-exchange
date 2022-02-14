@@ -1,6 +1,6 @@
 from . models import Quote
 import urllib.request,json
-
+from .email import mail_message
 
 base_url=None
 def configure_request(app):
@@ -34,3 +34,11 @@ def map_quote_result(quote_obj):
   new_quote=Quote(id,author,quote,permalink)
 
   return new_quote
+
+def subscriber_alert(subscriber_list,post):
+  if subscriber_list:
+    for subscriber in subscriber_list:
+      mail_message("New post in Fluent Exchange","email/new_post",subscriber.email,post=post,subscriber=subscriber)
+  
+  return
+

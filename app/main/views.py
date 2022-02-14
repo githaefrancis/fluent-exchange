@@ -5,10 +5,12 @@ from flask import redirect, render_template,request,url_for,flash
 from flask_login import current_user, login_required
 from . import main
 from ..request import get_quote
-from ..models import Post, User,Comment
+from ..models import Post, User,Comment,Subscriber
 from .forms import PostForm,CommentForm
 from werkzeug.utils import secure_filename
 from .. import db
+from ..request import subscriber_alert
+
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg','gif'}
 
 
@@ -30,7 +32,7 @@ def profile(user_name):
 @login_required
 def write():
   post_form=PostForm()
-
+  subscribers_list=Subscriber.query.filter_by(status='active').all()
   if request.method=='POST':
     banner=request.files['banner']
 
@@ -45,6 +47,8 @@ def write():
       new_post.save_post()
       saved_post=Post.query.filter_by(user=current_user).order_by(Post.id.desc()).first()
       flash('Post created successfully','success')
+      
+      subscriber_alert(subscribers_list,saved_post)
       return redirect(url_for('main.blog_post',id=saved_post.id))
   return render_template('write.html',post_form=post_form)
 
