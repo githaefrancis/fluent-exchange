@@ -2,8 +2,8 @@ from flask import redirect, render_template,url_for,request,flash
 from . import auth
 from .forms import RegistrationForm,LoginForm
 from flask_login import login_user,current_user,logout_user,login_required
-
 from ..models import User,Role
+from ..email import mail_message
 
 @auth.route('/login', methods=['GET','POST'])
 def login():
@@ -36,6 +36,8 @@ def register():
     user_role=Role.query.filter_by(name='User').first()
     user=User(name=name_input,email=email_input,username=username_input,password=password_input,role=user_role)
     user.save_user()
+    mail_message("Welcome to Fluent Exchange","email/welcome",user.email,user=user)
+    flash('Registration Successful, Welcome','success')
     return redirect(url_for('auth.login'))
   return render_template('auth/register.html',register_form=register_form)
 
