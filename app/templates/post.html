@@ -11,7 +11,10 @@
 {{macro.displayComments(comments,current_user)}}
 {%endblock%}
 
-{% block sidebar %}
-<h3>Featured</h3>
 
+{% block sidebar %}
+
+<h3>Featured</h3>
+{{macro.displayFeatured(posts)}}
 {% endblock %}
+

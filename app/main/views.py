@@ -37,7 +37,8 @@ def index():
 def profile(user_name):
   user=User.query.filter_by(id=current_user.id).first()
   posts=Post.query.filter_by(user=current_user,status='active').all()
-  return render_template('profile/profile.html',user=user,posts=posts)
+  all_comments=fetch_comments_count(posts)
+  return render_template('profile/profile.html',user=user,posts=posts,comments=all_comments)
 
 @main.route('/blog/write' , methods=['GET','POST'])
 @login_required
@@ -68,6 +69,7 @@ def write():
 @main.route('/blog/post/<id>',methods=['GET','POST'])
 def blog_post(id):
   post=Post.query.filter_by(id=id).first()
+  posts=Post.query.filter_by(status='active').order_by(Post.id.desc()).all()
   format_post=markdown2.markdown(post.content,extras=["code-friendly","fenced-code-blocks"])
   comment_form=CommentForm()
   comments=Comment.query.filter_by(post=post,status='active').all()
@@ -81,7 +83,7 @@ def blog_post(id):
     new_comment=Comment(content=comment,user=comment_owner,post=post)
     new_comment.save_comment()
     return redirect(request.referrer)
-  return render_template('post.html',post=post,comment_form=comment_form,comments=comments,format_post=format_post)
+  return render_template('post.html',post=post,comment_form=comment_form,comments=comments,format_post=format_post,posts=posts)
 
 
 @main.route('/blog/post/<id>/delete')
