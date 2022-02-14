@@ -16,7 +16,7 @@
 {%if user %}
 
 {% if user.profile_pic_path %}
-<img src="{{url_for('static',filename='user.profile_pic_path')}}" alt="">
+<img src="{{url_for('static',filename=user.profile_pic_path)}}" alt="">
 {%else%}
 <p class="rounded-circle">No Profile pic</p>
 {% endif %}
@@ -25,6 +25,8 @@
 <p>Email: {{user.email}}</p>
 <p>Bio: {{user.bio}}</p>
 <p>Joined on: {{user.created_at}}</p>
+
+<a href="{{url_for('main.edit_profile',user_name=user.username)}}" class="btn btn-success">Edit Profile</a>
 {% endif %}
 
 {% endblock %}

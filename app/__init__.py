@@ -4,9 +4,11 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_bootstrap import Bootstrap
 from flask_simplemde import SimpleMDE
+from flask_wtf.csrf import CSRFProtect
 
 
 
+csrf=CSRFProtect()
 bootstrap=Bootstrap()
 db=SQLAlchemy()
 login_manager=LoginManager()
@@ -22,7 +24,7 @@ def create_app(config_name):
 
   bootstrap.init_app(app)
   login_manager.init_app(app)
-
+  csrf.init_app(app)
   simple.init_app(app)
   from .main import main as main_blueprint
 

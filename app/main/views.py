@@ -1,7 +1,7 @@
 
 import os
 
-from flask import redirect, render_template,request,url_for
+from flask import redirect, render_template,request,url_for,flash
 from flask_login import current_user, login_required
 from . import main
 from ..request import get_quote
@@ -9,6 +9,8 @@ from ..models import Post, User,Comment
 from .forms import PostForm,CommentForm
 from werkzeug.utils import secure_filename
 from .. import db
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg','gif'}
+
 
 @main.route('/')
 def index():
@@ -100,3 +102,31 @@ def delete_comment(id):
   target_comment=Comment.query.filter_by(id=id).first()
   target_comment.delete_comment()
   return redirect(request.referrer)
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+@main.route('/user/<user_name>/profile/edit',methods=['GET','POST'])
+@login_required
+def edit_profile(user_name):
+  user=User.query.filter_by(id=current_user.id).first()
+  # posts=Post.query.filter_by(user=current_user,status='active').all()
+  if request.method=='POST':
+    
+    photo=request.files['photo']
+    if photo and allowed_file(photo.filename):
+      bio=request.form.get('bio')
+      filename=secure_filename(photo.filename)
+      photo.save(os.path.join('app/static/profile_pics',filename))
+      user.profile_pic_path=f'profile_pics/{filename}'
+      if bio:
+        user.bio=bio
+        user.save_user()
+      user.save_user()
+      flash('Update Successful','success')
+    else:
+      flash('Please provide a valid file','error')
+  
+  return render_template('profile/update.html',user=user)
