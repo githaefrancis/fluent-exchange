@@ -44,6 +44,7 @@ def write():
       new_post=Post(title=post_title,content=content,user=current_user,banner_path=file_path)
       new_post.save_post()
       saved_post=Post.query.filter_by(user=current_user).order_by(Post.id.desc()).first()
+      flash('Post created successfully','success')
       return redirect(url_for('main.blog_post',id=saved_post.id))
   return render_template('write.html',post_form=post_form)
 
@@ -70,6 +71,7 @@ def blog_post(id):
 def delete(id):
   post_to_delete=Post.query.filter_by(id=id).first()
   post_to_delete.delete_post()
+  flash('Post Deleted successfully')
   return redirect(url_for('main.index'))
 
 @main.route('/blog/post/<id>/update',methods=['GET','POST'])
@@ -91,6 +93,7 @@ def update(id):
       target_post.banner_path=file_path
 
     target_post.save_post()
+    flash('update successful','success')
     return redirect(url_for('main.blog_post',id=id))
 
   return render_template('edit_post.html',edit_post_form=edit_post_form)
@@ -101,6 +104,7 @@ def update(id):
 def delete_comment(id):
   target_comment=Comment.query.filter_by(id=id).first()
   target_comment.delete_comment()
+  flash('comment deleted successfully','success')
   return redirect(request.referrer)
 
 def allowed_file(filename):

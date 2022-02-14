@@ -41,3 +41,7 @@ header h1,header h5,.quote-intro{
 input{
   margin-bottom: 1rem;
 }
+
+.help-block{
+  color:red;
+}
