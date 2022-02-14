@@ -88,7 +88,7 @@ chmod +x start.sh
 
 ## Live Link
 
-[Fluent Exchange](https://fluent.herokuapp.com/ )
+[Fluent Exchange](https://fluent-exchange.herokuapp.com/)
 
 ## Contact
 Email: mureithigithae@gmail.com
