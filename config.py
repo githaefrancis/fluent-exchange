@@ -7,7 +7,7 @@ class Config:
   General class configuration
   '''
   SECRET_KEY=os.environ.get('SECRET_KEY')
-  QUOTE_BASE_URL='http://quotes.stormconsultancy.co.uk/random.json'
+  QUOTE_BASE_URL='https://api.quotable.io/random'
 
   SIMPLEMDE_JS_IIFE=True
   SIMPLEMDE_USE_CDN=True

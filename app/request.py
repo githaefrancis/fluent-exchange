@@ -26,10 +26,10 @@ def get_quote():
 
 def map_quote_result(quote_obj):
 
-  id=quote_obj.get('id')
+  id=quote_obj.get('_id')
   author=quote_obj.get('author')
-  quote=quote_obj.get('quote')
-  permalink=quote_obj.get('permalink')
+  quote=quote_obj.get('content')
+  permalink=quote_obj.get('author')
 
   new_quote=Quote(id,author,quote,permalink)
 
