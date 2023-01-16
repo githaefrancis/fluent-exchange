@@ -21,7 +21,7 @@ class Config:
 
 class ProdConfig(Config):
   # SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL').replace("://", "ql://", 1)
-  pass
+  SQLALCHEMY_DATABASE_URI='postgresql://postgres:bwbTZH0iPnpLNh3Mqleq@containers-us-west-199.railway.app:5488/railway'
 
 class DevConfig(Config):
   SQLALCHEMY_DATABASE_URI='postgresql+psycopg2://moringa:1234@localhost/fluent_exchange'
